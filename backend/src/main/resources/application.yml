@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: restaurant-pnl-backend
+  datasource:
+    url: "${DATABASE_URL:jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:restaurant_pnl}}"
+    username: ${DATABASE_USERNAME:}
+    password: ${DATABASE_PASSWORD:}
+
+restaurant-pnl:
+  demo-month: 2026-09
+  frontend-origin: ${FRONTEND_ORIGIN:http://localhost:3000}
+  jwt-secret: ${JWT_SECRET:dev-only-change-this-secret-before-cloud-deploy}
+  jwt-issuer: tableproof

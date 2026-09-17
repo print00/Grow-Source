@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: restaurant_pnl
+      POSTGRES_USER: restaurant_pnl
+      POSTGRES_PASSWORD: restaurant_pnl
+    ports:
+      - "5432:5432"
+    volumes:
+      - restaurant_pnl_data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./db/seed-demo.sql:/docker-entrypoint-initdb.d/02-seed-demo.sql:ro
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      FRONTEND_ORIGIN: http://localhost:3000
+      JWT_SECRET: change-this-before-production-deploy
+      DATABASE_URL: jdbc:postgresql://postgres:5432/restaurant_pnl
+      DATABASE_USERNAME: restaurant_pnl
+      DATABASE_PASSWORD: restaurant_pnl
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  restaurant_pnl_data:
