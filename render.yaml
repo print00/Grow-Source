@@ -3,35 +3,9 @@ services:
     name: tableproof-api
     runtime: docker
     rootDir: backend
-    plan: starter
+    plan: free
     envVars:
       - key: FRONTEND_ORIGIN
         sync: false
       - key: JWT_SECRET
         generateValue: true
-      - key: DATABASE_HOST
-        fromDatabase:
-          name: tableproof-postgres
-          property: host
-      - key: DATABASE_PORT
-        fromDatabase:
-          name: tableproof-postgres
-          property: port
-      - key: DATABASE_NAME
-        fromDatabase:
-          name: tableproof-postgres
-          property: database
-      - key: DATABASE_USERNAME
-        fromDatabase:
-          name: tableproof-postgres
-          property: user
-      - key: DATABASE_PASSWORD
-        fromDatabase:
-          name: tableproof-postgres
-          property: password
-
-databases:
-  - name: tableproof-postgres
-    plan: starter
-    databaseName: restaurant_pnl
-    user: restaurant_pnl
